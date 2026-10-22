@@ -1,7 +1,7 @@
 # Consulidate
 
 <!-- portfolio-card:start -->
-[![Consulidate — Обсуждение по ролям. Решения переходят в задачи.](docs/portfolio/card.png)](docs/portfolio/card.svg)
+[![sh3lby.code — нейтральная обложка](docs/portfolio/card.png)](docs/portfolio/card.svg)
 <!-- portfolio-card:end -->
 
 Consulidate — автономный корпоративный совет внутри Telegram-форума. Один бот публикует позиции виртуальных
