@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: consulidate
+      POSTGRES_USER: consulidate
+      POSTGRES_PASSWORD: consulidate
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U consulidate -d consulidate"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    ports:
+      - "${POSTGRES_PORT:-55433}:5432"
+    volumes:
+      - consulidate-postgres:/var/lib/postgresql/data
+
+  app:
+    build: .
+    depends_on:
+      - postgres
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql+asyncpg://consulidate:consulidate@127.0.0.1:${POSTGRES_PORT:-55433}/consulidate
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+      CONSULIDATE_CONFIG: config/consulidate.yaml
+      CONSULIDATE_MODEL_PROVIDER: ${CONSULIDATE_MODEL_PROVIDER:-fake}
+      CODEX_GATEWAY_URL: ${CODEX_GATEWAY_URL:-http://127.0.0.1:8765}
+      CODEX_GATEWAY_TOKEN: ${CODEX_GATEWAY_TOKEN:-}
+      CODEX_GATEWAY_MODEL: ${CODEX_GATEWAY_MODEL:-gpt-5.4}
+      CODEX_GATEWAY_WORKSPACE: ${CODEX_GATEWAY_WORKSPACE:?set a directory inside CODEX_API_ALLOWED_ROOT}
+      CODEX_GATEWAY_SANDBOX: read-only
+      CODEX_GATEWAY_TIMEOUT_SECONDS: ${CODEX_GATEWAY_TIMEOUT_SECONDS:-120}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    volumes:
+      - ./project_context:/app/project_context:ro
+
+volumes:
+  consulidate-postgres:

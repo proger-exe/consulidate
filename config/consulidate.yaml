@@ -1,0 +1,32 @@
+organization:
+  name: MineJust
+  code: MJ
+  timezone: Asia/Tashkent
+
+telegram:
+  owner_ids: [1997106874]
+  chat_id: null
+  topics: {}
+
+cycle:
+  interval_minutes: 60
+  max_new_debates: 1
+  max_review_debates: 2
+  max_new_initiatives: 1
+  debate_threshold: 0.65
+  max_participants: 5
+  max_rounds: 3
+  max_agent_calls: 20
+  max_tokens: 60000
+  timeout_seconds: 600
+
+autonomy:
+  max_decision_level: L1
+  max_estimated_cost: 10
+  minimum_confidence: 0.70
+  maximum_risk: 0.30
+  minimum_reversibility: 0.80
+
+project_context:
+  directory: project_context
+  max_characters: 12000
